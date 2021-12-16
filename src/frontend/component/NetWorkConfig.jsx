@@ -1,9 +1,9 @@
 import React from "react"
-import openSocket from 'socket.io-client';
+import { io } from 'socket.io-client';
 import {Button} from "antd"
 import XtermTest from "./XtermTest"
  
-const socket = openSocket('http://localhost:8000');
+const socket = io("http://localhost:8000");
  
 class NetWorkConfig extends React.Component {
     constructor(props) {
@@ -15,20 +15,37 @@ class NetWorkConfig extends React.Component {
     }
  
     createServer1() {
+        socket.on('connect', () => {
+            console.log('connect!');
+            socket.emit('createNewServer', {msgId: 'pi', ip: "192.168.11.111", username: "pi", password: "123123"});
+        });
+          
+        socket.on('createNewServer', msg => {
+            console.log('Msg from server:', msg);
+        });
         socket.emit("createNewServer", {msgId: 'pi', ip: "192.168.11.111", username: "pi", password: "123123"});
         let term = this.term1.getTerm();
-        console.log(term);
+        /*term.onData(function(key) {
+            let order = {
+                Data: key,
+                Op: "stdin"
+            };
+            this.onSend(order);
+        });*/
         term.onData((val)=> 
         {
+            console.log(val);
             socket.emit('pi', val);
-        })
+        });
         /*term.on("data", function(data) {
             socket.emit('pi', data);
         })*/
+        console.log("aaaaaaaaaa");
         socket.on("pi", function (data) {
             console.log(data)
             term.write(data)
-        })
+        });
+        console.log("aaaaaaaaaa");
     }
  
     createServer2() {

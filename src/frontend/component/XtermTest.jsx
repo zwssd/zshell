@@ -1,5 +1,7 @@
 import React from "react"
 import { Terminal } from 'xterm';
+import "xterm/css/xterm.css";
+import "xterm/lib/xterm.js";
 import FitAddon from "xterm-addon-fit";
  
 class XtermTest extends React.Component {
@@ -38,9 +40,12 @@ class XtermTest extends React.Component {
             }
         });
 
-        //this.term = new Terminal({cursorBlink: true});
         this.term.open(terminalContainer);
-        //this.term.fit();
+        // 换行并输入起始符“$”
+        this.term.prompt = () => {
+            this.term.write("\r\n$ ");
+        };
+        this.term.prompt();
     }
  
 }
