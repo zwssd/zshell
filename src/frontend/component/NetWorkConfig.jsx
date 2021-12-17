@@ -25,27 +25,15 @@ class NetWorkConfig extends React.Component {
         });
         socket.emit("createNewServer", {msgId: 'pi', ip: "192.168.11.111", username: "pi", password: "123123"});
         let term = this.term1.getTerm();
-        /*term.onData(function(key) {
-            let order = {
-                Data: key,
-                Op: "stdin"
-            };
-            this.onSend(order);
-        });*/
-        term.onData((val)=> 
+        term.onData((val)=>
         {
             console.log(val);
             socket.emit('pi', val);
         });
-        /*term.on("data", function(data) {
-            socket.emit('pi', data);
-        })*/
-        console.log("aaaaaaaaaa");
         socket.on("pi", function (data) {
             console.log(data)
             term.write(data)
         });
-        console.log("aaaaaaaaaa");
     }
  
     createServer2() {
