@@ -1,5 +1,6 @@
 import { Modal, Button } from 'antd';
 import React, { Component } from "react";
+import AddSshForm from "./AddSshForm";
 
 class AddSsh extends Component {
     constructor(props) {
@@ -33,37 +34,15 @@ class AddSsh extends Component {
         const { visible, loading } = this.state;
         return (
             <>
-                <Button type="primary" onClick={this.showModal}>
-                    Open Modal with customized footer
-                </Button>
                 <Modal
                     visible={visible}
-                    title="Title"
+                    title="添加ssh"
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
-                    footer={[
-                        <Button key="back" onClick={this.handleCancel}>
-                            Return
-                        </Button>,
-                        <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
-                            Submit
-                        </Button>,
-                        <Button
-                            key="link"
-                            href="https://google.com"
-                            type="primary"
-                            loading={loading}
-                            onClick={this.handleOk}
-                        >
-                            Search on Google
-                        </Button>,
-                    ]}
+                    width={'50%'}
+                    footer={null}
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <AddSshForm />
                 </Modal>
             </>
         );
