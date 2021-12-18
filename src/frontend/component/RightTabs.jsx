@@ -1,6 +1,7 @@
 import { Tabs, Button } from 'antd';
 import React, { Component } from "react";
 import RightXterm from "./RightXterm";
+import AddSsh from "./AddSsh";
 
 const { TabPane } = Tabs;
 
@@ -17,6 +18,7 @@ class RightTabs extends Component {
             panes,
         };
         this.Child = React.createRef();   //// 创建一个ref去储存DOM子元素
+        this.Modal = React.createRef();   //// 创建一个ref去储存DOM子元素
     }
 
     onChange = activeKey => {
@@ -32,6 +34,7 @@ class RightTabs extends Component {
         const activeKey = `newTab${this.newTabIndex++}`;
         panes.push({ title: 'New Tab', content: RightXterm, key: activeKey });
         this.setState({ panes, activeKey });
+        this.modalShowModal();
     };
 
     remove = targetKey => {
@@ -57,9 +60,14 @@ class RightTabs extends Component {
         this.Child.current.createServer()   //调用子元素函数 show   (括号里可以传参)
     };
 
+    modalShowModal() {
+        this.Modal.current.showModal()   //调用子元素函数 show   (括号里可以传参)
+    };
+
     render() {
         return (
             <div>
+                <AddSsh ref={this.Modal} />
                 <Tabs
                     onChange={this.onChange}
                     activeKey={this.state.activeKey}
