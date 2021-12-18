@@ -4,6 +4,7 @@ import RightXterm from "./RightXterm";
 import AddSsh from "./AddSsh";
 
 const { TabPane } = Tabs;
+let data = [];// 总数据
 
 class RightTabs extends Component {
     constructor(props) {
@@ -16,9 +17,10 @@ class RightTabs extends Component {
         this.state = {
             activeKey: panes[0].key,
             panes,
+            visible:false,
+            currentDetailData:[] // 当前需要传递给子组件的数据，用于显示form表单初始值
         };
         this.Child = React.createRef();   //// 创建一个ref去储存DOM子元素
-        this.Modal = React.createRef();   //// 创建一个ref去储存DOM子元素
     }
 
     onChange = activeKey => {
@@ -34,7 +36,7 @@ class RightTabs extends Component {
         const activeKey = `newTab${this.newTabIndex++}`;
         panes.push({ title: 'New Tab', content: RightXterm, key: activeKey });
         this.setState({ panes, activeKey });
-        this.modalShowModal();
+        this.changeVisible(true);
     };
 
     remove = targetKey => {
@@ -60,14 +62,29 @@ class RightTabs extends Component {
         this.Child.current.createServer()   //调用子元素函数 show   (括号里可以传参)
     };
 
-    modalShowModal() {
-        this.Modal.current.showModal()   //调用子元素函数 show   (括号里可以传参)
+    // 弹框显示状态、及当前需要展示的数据赋值
+    changeVisible = (status,index) =>{
+        this.setState({
+            visible:status,
+        })
+        if(index != undefined){
+            this.setState({
+                currentDetailData:data[index]
+            })
+        }
     };
 
     render() {
         return (
             <div>
-                <AddSsh ref={this.Modal} />
+                <AddSsh
+                    visible={this.state.visible}
+                    submitMap={this.onCreate}
+                    onCancel={() => {
+                        this.changeVisible(false);
+                    }}
+                    currentDetailData={this.state.currentDetailData}
+                />
                 <Tabs
                     onChange={this.onChange}
                     activeKey={this.state.activeKey}
