@@ -10,7 +10,7 @@ class RightTabs extends Component {
     constructor(props) {
         super(props);
         this.newTabIndex = 0;
-        const panes = new Array(2).fill(null).map((_, index) => {
+        const panes = new Array(1).fill(null).map((_, index) => {
             const id = String(index + 1);
             return { title: `Tab ${id}`, content: RightXterm, key: id };
         });
@@ -94,7 +94,7 @@ class RightTabs extends Component {
                     {this.state.panes.map(pane => (
                         <TabPane tab={pane.title} key={pane.key}>
                             <Button onClick={()=>{this.childCreateServer()}}>new按钮</Button>
-                            <pane.content ref={this.Child}></pane.content>
+                            <pane.content ref={this.Child} key={pane.key}></pane.content>
                         </TabPane>
                     ))}
                 </Tabs>

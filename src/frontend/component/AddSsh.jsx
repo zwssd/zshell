@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Radio } from 'antd';
+import { Button, Modal, Form, Input, InputNumber, Radio } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
     const [form] = Form.useForm();
@@ -20,9 +21,9 @@ const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
             title="新增ssh"
             okText="创建"
             cancelText="取消"
-            onCancel={onCancel}
             width={'50%'}
             destroyOnClose={true}
+            onCancel={onCancel}
             onOk={() => {
                 form
                     .validateFields()
@@ -58,6 +59,13 @@ const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
                 ]}>
                     <Input />
                 </Form.Item>
+                <Form.Item label="端口" name="port" rules={[
+                    {
+                        required: false,
+                    },
+                ]}>
+                    <InputNumber defaultValue={'22'} />
+                </Form.Item>
                 <Form.Item label="用户" name="username" rules={[
                     {
                         required: true,
@@ -72,7 +80,10 @@ const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
                         message: 'Please input the title of collection!',
                     },
                 ]}>
-                    <Input />
+                    <Input.Password
+                        placeholder="input password"
+                        iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                    />
                 </Form.Item>
 
             </Form>
