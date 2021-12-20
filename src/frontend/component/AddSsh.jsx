@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import { Button, Modal, Form, Input, InputNumber, Radio } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
-const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
+const AddSsh = ({ visible, onOk, onCancel, formData }) => {
     const [form] = Form.useForm();
     const layout = {
         labelCol: { span: 5 },
         wrapperCol: { span: 18 },
     };
-    let initValues = currentDetailData == undefined || currentDetailData.length == 0 ? {} :
+    let initValues = formData == undefined || formData.length == 0 ? {} :
         {
-            name:currentDetailData.name,
-            crs:currentDetailData.crs,
+            label:formData.label,
+            host:formData.host,
+            port:formData.port,
+            uname:formData.uname,
+            passwd:formData.passwd,
         }
+    //form.setFieldsValue(initValues)
 
-    form.setFieldsValue(initValues)
     return (
         <Modal
             visible={visible}
@@ -30,7 +33,7 @@ const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
                     .then(values => {
                         form.resetFields();
                         form.setFieldsValue(values)
-                        submitMap(values);
+                        onOk(values);
                     })
                     .catch(info => {
                         console.log('校验失败:', info);
@@ -40,7 +43,7 @@ const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
             <Form
                 form={form}
                 {...layout}
-                name="serverDetail"
+                name="serverInfo"
                 initialValues={initValues}
             >
                 <Form.Item label="标签" name="label" rules={[
@@ -66,7 +69,7 @@ const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
                 ]}>
                     <InputNumber defaultValue={'22'} />
                 </Form.Item>
-                <Form.Item label="用户" name="username" rules={[
+                <Form.Item label="用户" name="uname" rules={[
                     {
                         required: true,
                         message: 'Please input the title of collection!',
@@ -74,7 +77,7 @@ const AddSsh = ({ visible, submitMap, onCancel, currentDetailData }) => {
                 ]}>
                     <Input />
                 </Form.Item>
-                <Form.Item label="密码" name="password" rules={[
+                <Form.Item label="密码" name="passwd" rules={[
                     {
                         required: true,
                         message: 'Please input the title of collection!',

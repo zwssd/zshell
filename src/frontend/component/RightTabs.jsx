@@ -18,7 +18,7 @@ class RightTabs extends Component {
             activeKey: panes[0].key,
             panes,
             visible:false,
-            currentDetailData:[] // 当前需要传递给子组件的数据，用于显示form表单初始值
+            formData:[] // 当前需要传递给子组件的数据，用于显示form表单初始值
         };
         this.Child = React.createRef();   //// 创建一个ref去储存DOM子元素
     }
@@ -32,10 +32,6 @@ class RightTabs extends Component {
     };
 
     add = () => {
-        const { panes } = this.state;
-        const activeKey = `newTab${this.newTabIndex++}`;
-        panes.push({ title: 'New Tab', content: RightXterm, key: activeKey });
-        this.setState({ panes, activeKey });
         this.changeVisible(true);
     };
 
@@ -58,8 +54,9 @@ class RightTabs extends Component {
         this.setState({ panes, activeKey });
     };
 
-    childCreateServer() {
-        this.Child.current.createServer()   //调用子元素函数 show   (括号里可以传参)
+    childCreateServer(serverName, msgId, ip, username, password) {
+        console.log('childCreateServer');
+        this.Child.current.createServer(serverName, msgId, ip, username, password)   //调用子元素函数 show   (括号里可以传参)
     };
 
     // 弹框显示状态、及当前需要展示的数据赋值
@@ -68,10 +65,23 @@ class RightTabs extends Component {
             visible:status,
         })
         if(index != undefined){
+            console.log(data[index]);
             this.setState({
-                currentDetailData:data[index]
+                formData:data[index]
             })
         }
+    };
+
+    onOk = (status, values) => {
+        const { panes } = this.state;
+        const activeKey = `newTab${this.newTabIndex++}`;
+        panes.push({ title: 'New Tab', content: RightXterm, key: activeKey });
+        this.setState({ panes, activeKey });
+        //console.log(values);
+        this.setState({
+            visible:status,
+        });
+        this.childCreateServer(values.label, this.state.activeKey, values.host, values.uname, values.passwd)
     };
 
     render() {
@@ -79,11 +89,13 @@ class RightTabs extends Component {
             <div>
                 <AddSsh
                     visible={this.state.visible}
-                    submitMap={this.onCreate}
+                    onOk={(values) => {
+                        this.onOk(false, values);
+                    }}
                     onCancel={() => {
                         this.changeVisible(false);
                     }}
-                    currentDetailData={this.state.currentDetailData}
+                    formData={this.state.formData}
                 />
                 <Tabs
                     onChange={this.onChange}
@@ -93,8 +105,8 @@ class RightTabs extends Component {
                 >
                     {this.state.panes.map(pane => (
                         <TabPane tab={pane.title} key={pane.key}>
-                            <Button onClick={()=>{this.childCreateServer()}}>new按钮</Button>
-                            <pane.content ref={this.Child} key={pane.key}></pane.content>
+                            <Button onClick={()=>{this.childCreateServer(pane.key, pane.key, '192.168.11.111', 'pi', '123123' )}}>new按钮</Button>
+                            <pane.content ref={this.Child} id={pane.key}></pane.content>
                         </TabPane>
                     ))}
                 </Tabs>
