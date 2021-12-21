@@ -1,10 +1,10 @@
 import React from "react"
 import { io } from 'socket.io-client';
-import XtermTest from "./XtermTest"
+import XtermShow from "./XtermShow"
  
 const socket = io("http://localhost:8000");
  
-class RightXterm extends React.Component {
+class CenterXterm extends React.Component {
     constructor(props) {
         super(props);
         this.createServer = this.createServer.bind(this);
@@ -27,10 +27,8 @@ class RightXterm extends React.Component {
     }
  
     render() {
-        return  <div>
-                    <XtermTest ref={(term) => {this.term = term}} id={this.props.id} />
-                </div>
+        return <XtermShow ref={(term) => {this.term = term}} id={this.props.id} />
     }
 }
  
-export default RightXterm
+export default CenterXterm

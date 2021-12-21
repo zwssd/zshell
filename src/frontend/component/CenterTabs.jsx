@@ -1,18 +1,18 @@
 import { Tabs, Button } from 'antd';
 import React, { Component } from "react";
-import RightXterm from "./RightXterm";
+import CenterXterm from "./CenterXterm";
 import AddSsh from "./AddSsh";
 
 const { TabPane } = Tabs;
 let data = [];// 总数据
 
-class RightTabs extends Component {
+class CenterTabs extends Component {
     constructor(props) {
         super(props);
         this.newTabIndex = 0;
         const panes = new Array(1).fill(null).map((_, index) => {
             const id = String(index + 1);
-            return { title: `Tab ${id}`, content: RightXterm, key: id };
+            return { title: `Tab ${id}`, content: CenterXterm, key: id };
         });
         this.state = {
             activeKey: panes[0].key,
@@ -75,7 +75,7 @@ class RightTabs extends Component {
     onOk = (status, values) => {
         const { panes } = this.state;
         const activeKey = `newTab${this.newTabIndex++}`;
-        panes.push({ title: 'New Tab', content: RightXterm, key: activeKey });
+        panes.push({ title: 'New Tab', content: CenterXterm, key: activeKey });
         this.setState({ panes, activeKey });
         //console.log(values);
         this.setState({
@@ -86,7 +86,7 @@ class RightTabs extends Component {
 
     render() {
         return (
-            <div>
+            <div className="App">
                 <AddSsh
                     visible={this.state.visible}
                     onOk={(values) => {
@@ -105,7 +105,6 @@ class RightTabs extends Component {
                 >
                     {this.state.panes.map(pane => (
                         <TabPane tab={pane.title} key={pane.key}>
-                            <Button onClick={()=>{this.childCreateServer(pane.key, pane.key, '192.168.11.111', 'pi', '123123' )}}>new按钮</Button>
                             <pane.content ref={this.Child} id={pane.key}></pane.content>
                         </TabPane>
                     ))}
@@ -115,4 +114,4 @@ class RightTabs extends Component {
     }
 }
 
-export default RightTabs;
+export default CenterTabs;
