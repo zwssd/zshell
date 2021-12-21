@@ -9,3 +9,8 @@ html,body,#root{
 .App{
   height: 100%;
 }
+
+.ant-tabs-content{
+  flex: auto;
+  height: 100%;
+}

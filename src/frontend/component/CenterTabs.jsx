@@ -102,9 +102,10 @@ class CenterTabs extends Component {
                     activeKey={this.state.activeKey}
                     type="editable-card"
                     onEdit={this.onEdit}
+                    className={'App'}
                 >
                     {this.state.panes.map(pane => (
-                        <TabPane tab={pane.title} key={pane.key}>
+                        <TabPane tab={pane.title} key={pane.key} className={"App"}>
                             <pane.content ref={this.Child} id={pane.key}></pane.content>
                         </TabPane>
                     ))}

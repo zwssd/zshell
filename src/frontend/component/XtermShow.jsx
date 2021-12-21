@@ -11,7 +11,7 @@ class XtermShow extends React.Component {
     }
  
     render() {
-        return <div id={this.props.id}></div>
+        return <div id={this.props.id} className={"App"}></div>
     }
  
     getTerm() {
@@ -23,10 +23,10 @@ class XtermShow extends React.Component {
             rendererType: "dom", //渲染类型// default is canvas
             //rows: 15, //行数
             // cols: parseInt(_this.cols), // 不指定行数，自动回车后光标从下一行开始
-            convertEol: true, //启用时，光标将设置为下一行的开头
+            //convertEol: true, //启用时，光标将设置为下一行的开头
             //   scrollback: 50, //终端中的回滚量
             disableStdin: false, //是否应禁用输入。
-            cursorStyle: "underline", //光标样式
+            cursorStyle: "null", //光标样式
             cursorBlink: true, //光标闪烁
             theme: {
                 foreground: "#7e9192", //字体
@@ -40,12 +40,14 @@ class XtermShow extends React.Component {
 
         this.term.open(document.getElementById(this.props.id));
         fitAddon.fit();
+        this.term.scrollToBottom();
 
         // 换行并输入起始符“$”
         this.term.prompt = () => {
             this.term.write("\r\n$ ");
         };
         this.term.prompt();
+        this.term.onResize();
     }
  
 }
