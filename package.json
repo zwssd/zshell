@@ -24,6 +24,8 @@
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
+    "electron-packager": "^15.4.0",
+    "electron-prebuilt": "^1.4.13",
     "eslint": "^7.11.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
@@ -78,11 +80,13 @@
     "xterm": "^4.15.0",
     "xterm-addon-fit": "^0.5.0"
   },
+  "main": "./src/main.js",
   "scripts": {
     "ser": "node src/backend/server.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "pack": "electron-packager . zshell --platform=darwin --arch=x64 --out ./dist --download.mirrorOptions.mirror=https://npm.taobao.org/mirrors/electron/"
   },
   "eslintConfig": {
     "extends": [
