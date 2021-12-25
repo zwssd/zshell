@@ -80,13 +80,14 @@
     "xterm": "^4.15.0",
     "xterm-addon-fit": "^0.5.0"
   },
-  "main": "./src/main.js",
+  "main": "./main.js",
   "scripts": {
     "ser": "node src/backend/server.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "pack": "electron-packager . zshell --platform=darwin --arch=x64 --out ./dist --download.mirrorOptions.mirror=https://npm.taobao.org/mirrors/electron/"
+    "elec": "electron .",
+    "pack": "electron-packager . zshell --platform=darwin --arch=x64 --out ./dist --icon=./src/res/zshell.ico --download.mirrorOptions.mirror=https://npm.taobao.org/mirrors/electron/"
   },
   "eslintConfig": {
     "extends": [

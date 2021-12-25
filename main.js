@@ -21,7 +21,8 @@ mainWindow = new BrowserWindow({width: 1300, height: 1000})
   // 加载应用----适用于 react 项目
   // mainWindow.loadURL('http://localhost:3006/');
   // mainWindow.loadFile('public/index.html')
-  mainWindow.loadURL(`file://${path.join(__dirname, './build/index.html')}`)
+  mainWindow.loadURL(`file://${__dirname}/build/index.html`);
+  //mainWindow.loadURL(`file://${path.join(__dirname, './build/index.html')}`)
   // main.Window.loadURL(url.format({
   //    pathname: path.join(__dirname, './build/index.html'),
   //    protocol: 'file:',
