@@ -2,6 +2,16 @@
   "name": "zshell",
   "version": "0.0.1",
   "private": true,
+  "main": "./main.js",
+  "homepage": "./",
+  "scripts": {
+    "ser": "node src/backend/server.js",
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "elec": "electron .",
+    "pack": "electron-packager . zshell --platform=darwin --arch=x64 --out ./dist --icon=./src/res/zshell.ico --download.mirrorOptions.mirror=https://npm.taobao.org/mirrors/electron/"
+  },
   "dependencies": {
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
@@ -79,15 +89,6 @@
     "workbox-webpack-plugin": "5.1.4",
     "xterm": "^4.15.0",
     "xterm-addon-fit": "^0.5.0"
-  },
-  "main": "./main.js",
-  "scripts": {
-    "ser": "node src/backend/server.js",
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "elec": "electron .",
-    "pack": "electron-packager . zshell --platform=darwin --arch=x64 --out ./dist --icon=./src/res/zshell.ico --download.mirrorOptions.mirror=https://npm.taobao.org/mirrors/electron/"
   },
   "eslintConfig": {
     "extends": [
