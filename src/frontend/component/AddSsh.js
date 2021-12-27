@@ -1,96 +1,36 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, InputNumber, Radio } from 'antd';
+import {Modal, Button, Tag, Input, InputNumber} from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
-const AddSsh = ({ visible, onOk, onCancel, formData }) => {
-    const [form] = Form.useForm();
-    const layout = {
-        labelCol: { span: 5 },
-        wrapperCol: { span: 18 },
+const AddSsh = (visible, onOk, onCancel) => {
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showModal = () => {
+        setIsModalVisible(true);
     };
-    let initValues = formData == undefined || formData.length == 0 ? {} :
-        {
-            label:formData.label,
-            host:formData.host,
-            port:formData.port,
-            uname:formData.uname,
-            passwd:formData.passwd,
-        }
-    //form.setFieldsValue(initValues)
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
 
     return (
-        <Modal
-            visible={visible}
-            title="新增ssh"
-            okText="创建"
-            cancelText="取消"
-            width={'50%'}
-            destroyOnClose={true}
-            onCancel={onCancel}
-            onOk={() => {
-                form
-                    .validateFields()
-                    .then(values => {
-                        form.resetFields();
-                        form.setFieldsValue(values)
-                        onOk(values);
-                    })
-                    .catch(info => {
-                        console.log('校验失败:', info);
-                    });
-            }}
-        >
-            <Form
-                form={form}
-                {...layout}
-                name="serverInfo"
-                initialValues={initValues}
-            >
-                <Form.Item label="标签" name="label" rules={[
-                    {
-                        required: true,
-                        message: 'Please input the title of collection!',
-                    },
-                ]} >
-                    <Input />
-                </Form.Item>
-                <Form.Item label="主机" name="host" rules={[
-                    {
-                        required: true,
-                        message: 'Please input the title of collection!',
-                    },
-                ]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item label="端口" name="port" rules={[
-                    {
-                        required: false,
-                    },
-                ]}>
-                    <InputNumber defaultValue={'22'} />
-                </Form.Item>
-                <Form.Item label="用户" name="uname" rules={[
-                    {
-                        required: true,
-                        message: 'Please input the title of collection!',
-                    },
-                ]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item label="密码" name="passwd" rules={[
-                    {
-                        required: true,
-                        message: 'Please input the title of collection!',
-                    },
-                ]}>
-                    <Input.Password
-                        placeholder="input password"
-                        iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                    />
-                </Form.Item>
-
-            </Form>
-        </Modal>
+        <>
+            <Button type="primary" onClick={showModal}>
+                Open Modal OK
+            </Button>
+            <Modal title="新增ssh" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <Tag color="#2db7f5">标签</Tag>:<Input placeholder="标签" />
+                <Tag color="#2db7f5">主机</Tag>:<Input placeholder="主机" />
+                <Tag color="#2db7f5">端口</Tag>:<InputNumber min={1}  max={65535} defaultValue={22} />
+                <Tag color="#2db7f5">用户</Tag>:<Input placeholder="用户" />
+                <Tag color="#2db7f5">密码</Tag>:<Input.Password placeholder="密码" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+            </Modal>
+        </>
     );
 };
 

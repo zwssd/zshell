@@ -72,7 +72,7 @@ class CenterTabs extends Component {
         }
     };
 
-    onOk = (status, values) => {
+    onOk = (status) => {
         const { panes } = this.state;
         const activeKey = `newTab${this.newTabIndex++}`;
         panes.push({ title: 'New Tab', content: CenterXterm, key: activeKey });
@@ -81,7 +81,7 @@ class CenterTabs extends Component {
         this.setState({
             visible:status,
         });
-        this.childCreateServer(values.label, this.state.activeKey, values.host, values.uname, values.passwd)
+        //this.childCreateServer(values.label, this.state.activeKey, values.host, values.uname, values.passwd)
     };
 
     render() {
@@ -89,13 +89,12 @@ class CenterTabs extends Component {
             <div className="App">
                 <AddSsh
                     visible={this.state.visible}
-                    onOk={(values) => {
-                        this.onOk(false, values);
+                    onOk={() => {
+                        this.onOk(false);
                     }}
                     onCancel={() => {
                         this.changeVisible(false);
                     }}
-                    formData={this.state.formData}
                 />
                 <Tabs
                     onChange={this.onChange}
