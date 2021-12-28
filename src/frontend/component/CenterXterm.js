@@ -11,8 +11,8 @@ class CenterXterm extends React.Component {
         this.term = null;
     }
  
-    createServer(serverName, msgId, ip, username, password) {
-        console.log(serverName);
+    createServer(msgId, port, ip, username, password) {
+        //console.log("createServer===================="+msgId+"=="+ip+"=="+port+"=="+username+"=="+password);
         socket.emit('createNewServer', {msgId: msgId, ip: ip, username: username, password: password});
         let term = this.term.getTerm();
         term.onData((val)=>

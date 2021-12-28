@@ -14,7 +14,10 @@ const SSHClient = require('ssh2').Client;
 function createNewServer(machineConfig, socket) {
     console.log("createNewServer====================");
     var ssh = new SSHClient();
-    let {msgId, ip, username, password} = machineConfig;
+    let {msgId, ip, port, username, password} = machineConfig;
+    if(port==null || port=="" || port==undefined) {
+        port = 22;
+    }
     ssh.on('ready', function () {
         socket.emit(msgId, '\r\n***' + ip + ' SSH CONNECTION ESTABLISHED ***\r\n');
         ssh.shell(function(err, stream) {
@@ -37,7 +40,7 @@ function createNewServer(machineConfig, socket) {
         socket.emit(msgId, '\r\n*** SSH CONNECTION ERROR: ' + err.message + ' ***\r\n');
     }).connect({
         host: ip,
-        port: 22,
+        port: port,
         username: username,
         password: password
     });

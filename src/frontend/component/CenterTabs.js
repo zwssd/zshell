@@ -54,9 +54,8 @@ class CenterTabs extends Component {
         this.setState({ panes, activeKey });
     };
 
-    childCreateServer(serverName, msgId, ip, username, password) {
-        console.log('childCreateServer');
-        this.Child.current.createServer(serverName, msgId, ip, username, password)   //调用子元素函数 show   (括号里可以传参)
+    childCreateServer(msgId, ip, port, username, password) {
+        this.Child.current.createServer(msgId, ip, port, username, password)   //调用子元素函数 show   (括号里可以传参)
     };
 
     // 弹框显示状态、及当前需要展示的数据赋值
@@ -72,19 +71,15 @@ class CenterTabs extends Component {
         }
     };
 
-    onOk = (status, refvalue) => {
-        console.log('aaaaaa==============');
-        console.log(refvalue);
-        console.log(status);
+    onOk = (status, label, host, port, uname, passwd) => {
         const { panes } = this.state;
         const activeKey = `newTab${this.newTabIndex++}`;
-        panes.push({ title: 'New Tab', content: CenterXterm, key: activeKey });
+        panes.push({ title: label, content: CenterXterm, key: activeKey });
         this.setState({ panes, activeKey });
-        //console.log(values);
         this.setState({
             visible:status,
         });
-        //this.childCreateServer(values.label, this.state.activeKey, values.host, values.uname, values.passwd)
+        this.childCreateServer(this.state.activeKey, host, port, uname, passwd)
     };
 
     render() {
