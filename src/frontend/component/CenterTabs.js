@@ -72,7 +72,10 @@ class CenterTabs extends Component {
         }
     };
 
-    onOk = (status) => {
+    onOk = (status, refvalue) => {
+        console.log('aaaaaa==============');
+        console.log(refvalue);
+        console.log(status);
         const { panes } = this.state;
         const activeKey = `newTab${this.newTabIndex++}`;
         panes.push({ title: 'New Tab', content: CenterXterm, key: activeKey });
@@ -89,9 +92,7 @@ class CenterTabs extends Component {
             <div className="App">
                 <AddSsh
                     visible={this.state.visible}
-                    onOk={() => {
-                        this.onOk(false);
-                    }}
+                    onOk={this.onOk}
                     onCancel={() => {
                         this.changeVisible(false);
                     }}
