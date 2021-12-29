@@ -5,17 +5,10 @@ import AddSsh from "./AddSsh";
 
 const Datastore = require('nedb');
 let data_db = new Datastore({
-    filename: 'data.db',
+    filename: 'zshelldata.db',
     autoload: true
 });
-let doc = {
-    id: 1,
-    name: 'perillaroc'
-};
-data_db.insert(doc, function(err, new_doc){
-    "use strict";
-   console.log(err, new_doc);
-});
+
 
 const { TabPane } = Tabs;
 let data = [];// 总数据
@@ -92,6 +85,17 @@ class CenterTabs extends Component {
         this.setState({ panes, activeKey });
         this.setState({
             visible:status,
+        });
+        //写入数据库nedb，但其实它只存到浏览器的indexedDB下了。
+        let doc = {
+            host: host,
+            port: port,
+            uname: uname,
+            passwd: passwd
+        };
+        data_db.insert(doc, function(err, new_doc){
+            "use strict";
+            console.log(err, new_doc);
         });
         this.childCreateServer(this.state.activeKey, host, port, uname, passwd)
     };
