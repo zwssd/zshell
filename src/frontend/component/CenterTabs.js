@@ -3,10 +3,18 @@ import React, { Component } from "react";
 import CenterXterm from "./CenterXterm";
 import AddSsh from "./AddSsh";
 
-const nedb = require('nedb');
-const db = new nedb({
-    filename: '/Users/david/db.json',
+const Datastore = require('nedb');
+let data_db = new Datastore({
+    filename: 'data.db',
     autoload: true
+});
+let doc = {
+    id: 1,
+    name: 'perillaroc'
+};
+data_db.insert(doc, function(err, new_doc){
+    "use strict";
+   console.log(err, new_doc);
 });
 
 const { TabPane } = Tabs;
@@ -85,13 +93,6 @@ class CenterTabs extends Component {
         this.setState({
             visible:status,
         });
-        // 向nedb数据库插入单项
-        db.insert({
-            host: host,
-            port: port,
-            uname: uname,
-            passwd: passwd
-        }, (err, ret) => {});
         this.childCreateServer(this.state.activeKey, host, port, uname, passwd)
     };
 
