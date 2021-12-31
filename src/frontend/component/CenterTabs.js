@@ -78,6 +78,12 @@ class CenterTabs extends Component {
         }
     };
 
+    changeVisibleTrue = () => {
+        this.setState({
+            visible: true,
+        })
+    };
+
     onOk = (status, label, host, port, uname, passwd) => {
         const { panes } = this.state;
         const activeKey = `newTab${this.newTabIndex++}`;
@@ -98,6 +104,10 @@ class CenterTabs extends Component {
             console.log(err, new_doc);
         });
         this.childCreateServer(this.state.activeKey, host, port, uname, passwd)
+    };
+
+    componentDidMount(){
+        this.props.onRef && this.props.onRef(this);
     };
 
     render() {
