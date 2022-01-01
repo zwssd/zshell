@@ -106,6 +106,16 @@ class CenterTabs extends Component {
         this.childCreateServer(this.state.activeKey, host, port, uname, passwd)
     };
 
+    onConn = (host, port, uname, passwd) => {
+        //console.log("CT onConn======");
+        //console.log(passwd);
+        const { panes } = this.state;
+        const activeKey = `newTab${this.newTabIndex++}`;
+        panes.push({ title: 'newTab', content: CenterXterm, key: activeKey });
+        this.setState({ panes, activeKey });
+        this.childCreateServer(this.state.activeKey, host, port, uname, passwd);
+    };
+
     componentDidMount(){
         this.props.onRef && this.props.onRef(this);
     };

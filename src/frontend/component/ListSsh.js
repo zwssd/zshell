@@ -13,6 +13,7 @@ const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender
 
 class ListSsh extends Component {
     tableData = [];
+    id = '';
     host = '';
     port = '';
     uname = '';
@@ -32,6 +33,9 @@ class ListSsh extends Component {
         data_db.find({} ).sort({ _id: -1 }).limit(count).exec((err, docs) => {
             Object.keys(docs).forEach((k) => {
                 Object.keys(docs[k]).forEach((kk,vv)=>{
+                    if(kk==="_id"){
+                        this.id = docs[k][kk];
+                    }
                     if(kk==="host"){
                         this.host = docs[k][kk];
                     }
@@ -46,6 +50,7 @@ class ListSsh extends Component {
                     }
                 });
                 this.tableData.push({
+                    id: this.id,
                     host: this.host,
                     port: this.port,
                     uname: this.uname,
@@ -95,12 +100,18 @@ class ListSsh extends Component {
         this.props.onCancel(false);
     };
 
+    handleConn = (host, port, uname, passwd) => {
+        this.props.onCancel(false);
+        this.props.onConn(host, port, uname, passwd);
+    };
+
     render(){
         return (
             <>
-                <Modal title="ssh列表" visible={this.props.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
+                <Modal title="ssh列表" visible={this.props.visible} onOk={this.handleOk} onCancel={this.handleCancel} footer={null}>
                     <Table dataSource={this.tableData}>
-                        <Column title="host" dataIndex="host" />
+                        <Column title="id" dataIndex="id" key="id" />
+                        <Column title="host" dataIndex="host" key="host" />
                         <Column title="port" dataIndex="port" key="port" />
                         <Column title="uname" dataIndex="uname" key="uname" />
                         <Column
@@ -108,7 +119,7 @@ class ListSsh extends Component {
                             key="action"
                             render={(text, record) => (
                                 <Space size="middle">
-                                    <a>连接</a>
+                                    <a onClick={() => {this.handleConn(record.host, record.port, record.uname, record.passwd)}}>连接</a>
                                     <a>删除</a>
                                 </Space>
                             )}

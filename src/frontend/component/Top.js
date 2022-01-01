@@ -18,7 +18,7 @@ class Top extends Component{
     };
 
     changeVisibleTrue = () => {
-        console.log('changeVisibleTrue======');
+        //console.log('changeVisibleTrue======');
         this.setState({
             visible: true,
         })
@@ -30,6 +30,13 @@ class Top extends Component{
         });
     };
 
+    onConn = (host, port, uname, passwd) => {
+      //console.log('onConn');
+      //console.log(passwd);
+      this.props.onConn(host, port, uname, passwd);
+    };
+
+
     render() {
         return(
             <div className="TopApp">
@@ -38,6 +45,9 @@ class Top extends Component{
                 onOk={this.onOk}
                 onCancel={() => {
                     this.changeListVisible(false);
+                }}
+                onConn={(host, port, uname, passwd) => {
+                    this.onConn(host, port, uname, passwd);
                 }}
                 />
                 <div className="icons-list">

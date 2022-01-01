@@ -13,11 +13,11 @@ class IndexLayout extends Component {
   render(){
     return (
       <Layout>
-        <Header class={ 'ant-layout-headera' }><Top onClick={
-            ()=>{
-                this.CenterTabs.changeVisibleTrue&&this.CenterTabs.changeVisibleTrue()
-            }
-        } /></Header>
+        <Header class={ 'ant-layout-headera' }>
+            <Top onClick={()=>{this.CenterTabs.changeVisibleTrue&&this.CenterTabs.changeVisibleTrue()}}
+                 onConn={(host, port, uname, passwd)=>{this.CenterTabs.onConn&&this.CenterTabs.onConn(host, port, uname, passwd)}}
+            />
+        </Header>
         <Content style={{ padding: '0 20px' }}>
             <CenterTabs onRef={this.onRef} />
         </Content>
