@@ -1,10 +1,22 @@
 import React, {Component} from 'react';
-import {List, Button, Skeleton, Modal } from 'antd';
+import {Table, Tag, Space, Button, Modal } from 'antd';
+const { Column, ColumnGroup } = Table;
+
+const Datastore = require('nedb');
+let data_db = new Datastore({
+    filename: 'zshelldata.db',
+    autoload: true
+});
 
 const count = 10;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender&noinfo`;
 
 class ListSsh extends Component {
+    tableData = [];
+    host = '';
+    port = '';
+    uname = '';
+    passwd = '';
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +25,40 @@ class ListSsh extends Component {
             data: [],
             list: [],
         };
+    };
+
+    componentDidMount() {
+        // 查询多项
+        data_db.find({} ).sort({ _id: -1 }).limit(count).exec((err, docs) => {
+            Object.keys(docs).forEach((k) => {
+                Object.keys(docs[k]).forEach((kk,vv)=>{
+                    if(kk==="host"){
+                        this.host = docs[k][kk];
+                    }
+                    if(kk==="port"){
+                        this.port = docs[k][kk];
+                    }
+                    if(kk==="uname"){
+                        this.uname = docs[k][kk];
+                    }
+                    if(kk==="passwd"){
+                        this.passwd = docs[k][kk];
+                    }
+                });
+                this.tableData.push({
+                    host: this.host,
+                    port: this.port,
+                    uname: this.uname,
+                    passwd: this.passwd
+                });
+            });
+            //console.log(this.tableData);
+            this.setState({
+                initLoading: false,
+                data: this.tableData,
+                list: this.tableData
+            });
+        });
     };
 
     onLoadMore = () => {
@@ -50,50 +96,28 @@ class ListSsh extends Component {
     };
 
     render(){
-        const { initLoading, loading, list } = this.state;
-        const loadMore =
-            !initLoading && !loading ? (
-                <div
-                    style={{
-                        textAlign: 'center',
-                        marginTop: 12,
-                        height: 32,
-                        lineHeight: '32px',
-                    }}
-                >
-                    <Button onClick={this.onLoadMore}>loading more</Button>
-                </div>
-            ) : null;
         return (
             <>
                 <Modal title="ssh列表" visible={this.props.visible} onOk={this.handleOk} onCancel={this.handleCancel}>
-                    <List
-                        className="demo-loadmore-list"
-                        loading={initLoading}
-                        itemLayout="horizontal"
-                        loadMore={loadMore}
-                        dataSource={list}
-                        renderItem={item => (
-                            <List.Item
-                                actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
-                            >
-                                <Skeleton avatar title={false} loading={item.loading} active>
-                                    <List.Item.Met />}
-                                    host={item.name}
-                                    port={item.port}
-                                    uname={item.uname}
-                                    passwd={item.passwd}
-                                    />
-                                    <div>content</div>
-                                </Skeleton>
-                            </List.Item>
-                        )}
-                    />
+                    <Table dataSource={this.tableData}>
+                        <Column title="host" dataIndex="host" />
+                        <Column title="port" dataIndex="port" key="port" />
+                        <Column title="uname" dataIndex="uname" key="uname" />
+                        <Column
+                            title="Action"
+                            key="action"
+                            render={(text, record) => (
+                                <Space size="middle">
+                                    <a>连接</a>
+                                    <a>删除</a>
+                                </Space>
+                            )}
+                        />
+                    </Table>
                 </Modal>
             </>
         );
     }
-
 };
 
 export default ListSsh;

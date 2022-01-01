@@ -1,4 +1,4 @@
-import { Tabs, Button } from 'antd';
+import { Tabs } from 'antd';
 import React, { Component } from "react";
 import CenterXterm from "./CenterXterm";
 import AddSsh from "./AddSsh";
