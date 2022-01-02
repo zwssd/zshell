@@ -105,6 +105,26 @@ class ListSsh extends Component {
         this.props.onConn(host, port, uname, passwd);
     };
 
+    deleteArrayItem = (key,value) => {
+        for (let i = 0; i < this.tableData.length; i++) {
+            if(this.tableData[i][key]===value){
+                this.tableData.splice(i, 1);
+            }
+        }
+    }
+
+    handleDel = (id) => {
+        // 删除一条记录
+        // options set to {} since the default for multi is false
+        data_db.remove({ _id: id }, {}, (err, numRemoved) => {
+            // numRemoved = 1
+            if(numRemoved === 1){
+                this.deleteArrayItem("id", id);
+                this.handleCancel();
+            }
+        });
+    };
+
     render(){
         return (
             <>
@@ -120,7 +140,7 @@ class ListSsh extends Component {
                             render={(text, record) => (
                                 <Space size="middle">
                                     <a onClick={() => {this.handleConn(record.host, record.port, record.uname, record.passwd)}}>连接</a>
-                                    <a>删除</a>
+                                    <a onClick={() => {this.handleDel(record.id)}}>删除</a>
                                 </Space>
                             )}
                         />
