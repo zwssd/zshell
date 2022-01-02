@@ -66,33 +66,6 @@ class ListSsh extends Component {
         });
     };
 
-    onLoadMore = () => {
-        this.setState({
-            loading: true,
-            list: this.state.data.concat(
-                [...new Array(count)].map(() => ({ loading: true, name: {}, picture: {} })),
-            ),
-        });
-        fetch(fakeDataUrl)
-            .then(res => res.json())
-            .then(res => {
-                const data = this.state.data.concat(res.results);
-                this.setState(
-                    {
-                        data,
-                        list: data,
-                        loading: false,
-                    },
-                    () => {
-                        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-                        // In real scene, you can using public method of react-virtualized:
-                        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-                        window.dispatchEvent(new Event('resize'));
-                    },
-                );
-            });
-    };
-
     handleOk = () => {
         this.props.onOk(false, this.state.label, this.state.host, this.state.port, this.state.uname, this.state.passwd);
     };
@@ -128,7 +101,10 @@ class ListSsh extends Component {
     render(){
         return (
             <>
-                <Modal title="ssh列表" visible={this.props.visible} onOk={this.handleOk} onCancel={this.handleCancel} footer={null}>
+                <Modal title="ssh列表" visible={this.props.visible}
+                       onOk={this.handleOk} onCancel={this.handleCancel} footer={null}
+                       destroyOnClose={true}
+                >
                     <Table dataSource={this.tableData}>
                         <Column title="id" dataIndex="id" key="id" />
                         <Column title="host" dataIndex="host" key="host" />
