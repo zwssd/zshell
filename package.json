@@ -10,7 +10,73 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "elec": "electron .",
-    "pack": "electron-packager . zshell --platform=darwin --arch=x64 --out ./dist --icon=./src/res/zshell.ico --download.mirrorOptions.mirror=https://npm.taobao.org/mirrors/electron/"
+    "packMac": "electron-builder -m",
+    "packLinux": "electron-builder -l",
+    "packWin": "electron-builder -w"
+  },
+  "build": {
+    "productName":"zshell",
+    "appId": "com.zshell.zshell",
+    "copyright":"MIT",
+    "directories": {
+      "output": "dist"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./build/icons/aaa.ico",
+      "uninstallerIcon": "./build/icons/bbb.ico",
+      "installerHeaderIcon": "./build/icons/aaa.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "xxxx",
+      "include": "build/script/installer.nsh"
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "http://xxxxx/"
+      }
+    ],
+    "files": [
+      "build/**/*",
+      "package.json",
+      "main.js"
+    ],
+    "extends": null,
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "icon": "build/logo512.png"
+    },
+    "win": {
+      "icon": "build/favicon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "icon": "build/favicon.ico"
+    }
   },
   "dependencies": {
     "@babel/core": "7.12.3",
@@ -34,9 +100,6 @@
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
-    "electron": "^16.0.5",
-    "electron-packager": "^15.4.0",
-    "electron-prebuilt": "^1.4.13",
     "eslint": "^7.11.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
@@ -162,7 +225,12 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "react-app22"
     ]
+  },
+  "devDependencies": {
+    "electron": "^16.0.5",
+    "electron-prebuilt": "^1.4.13",
+    "electron-builder": "^22.14.5"
   }
 }
