@@ -2,6 +2,9 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const child_process = require('child_process');
+const exec = child_process.exec;
+var openExec;
  
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
@@ -28,14 +31,26 @@ mainWindow = new BrowserWindow({width: 1300, height: 1000})
   //    protocol: 'file:',
   //    slashes: true
   // }))
-  
-  
+
   // 打开开发者工具，默认不打开
   mainWindow.webContents.openDevTools()
  
   // 关闭window时触发下列事件.
   mainWindow.on('closed', function () {
     mainWindow = null
+  })
+
+  //创建子进程，直接打开当前目录下的server.js
+  console.log('使用openExec方法执行server.js');
+  openExec = exec('node ./src/backend/server.js', function (error, stdout, stderr) {
+    if (error) {
+      console.log(error.stack);
+      console.log('Error code: ' + error.code);
+      return;
+    }
+    console.log('使用exec方法输出: ' + stdout);
+    console.log(`stderr: ${stderr}`);
+    console.log(process.pid)
   })
 }
  
@@ -47,6 +62,21 @@ app.on('window-all-closed', function () {
   // macOS中除非用户按下 `Cmd + Q` 显式退出,否则应用与菜单栏始终处于活动状态.
   if (process.platform !== 'darwin') {
     app.quit()
+
+    // 判断openExec是否存在，存在就杀掉node进程
+    if (!openExec) {
+      // console.log('openExec is null')
+    } else {
+      exec('taskkill /f /t /im node.exe', function (error, stdout, stderr) {
+        if (error) {
+          console.log(error.stack);
+          console.log('Error code: ' + error.code);
+          return;
+        }
+        console.log('使用exec方法输出: ' + stdout);
+        console.log(`stderr: ${stderr}`);
+      });
+    }
   }
 })
  

@@ -10,14 +10,14 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "elec": "electron .",
-    "packMac": "electron-builder -m",
-    "packLinux": "electron-builder -l",
-    "packWin": "electron-builder -w"
+    "packM": "electron-builder -m",
+    "packL": "electron-builder -l",
+    "packW": "electron-builder -w"
   },
   "build": {
-    "productName":"zshell",
+    "productName": "zshell",
     "appId": "com.zshell.zshell",
-    "copyright":"MIT",
+    "copyright": "MIT",
     "directories": {
       "output": "dist"
     },
@@ -42,7 +42,8 @@
     "files": [
       "build/**/*",
       "package.json",
-      "main.js"
+      "main.js",
+      "src/backend/server.js"
     ],
     "extends": null,
     "dmg": {
@@ -96,6 +97,7 @@
     "bfj": "^7.0.2",
     "camelcase": "^6.1.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "child_process": "^1.0.2",
     "cors": "^2.8.5",
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
@@ -230,7 +232,7 @@
   },
   "devDependencies": {
     "electron": "^16.0.5",
-    "electron-prebuilt": "^1.4.13",
-    "electron-builder": "^22.14.5"
+    "electron-builder": "^22.14.5",
+    "electron-prebuilt": "^1.4.13"
   }
 }
