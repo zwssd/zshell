@@ -10,7 +10,7 @@ var openExec;
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
 let mainWindow
 
-log.debug('electerm start=================')
+log.debug('electron start=================')
  
 function createWindow () {
 //创建浏览器窗口,宽高自定义具体大小你开心就好

@@ -43,6 +43,7 @@
       "build/**/*",
       "package.json",
       "main.js",
+      "src/frontend/utils/log.js",
       "src/backend/server.js"
     ],
     "extends": null,
