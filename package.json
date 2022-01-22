@@ -10,9 +10,9 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "elec": "electron .",
-    "packM": "electron-builder -m",
-    "packL": "electron-builder -l",
-    "packW": "electron-builder -w"
+    "packm": "electron-builder -m",
+    "packl": "electron-builder -l",
+    "packw": "electron-builder -w"
   },
   "build": {
     "productName": "zshell",
