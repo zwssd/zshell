@@ -34,6 +34,7 @@ class AddSsh extends Component {
         this.props.onOk(false, this.state.label, this.state.host, this.state.port, this.state.uname, this.state.passwd);
     };
     handleCancel = () => {
+        //console.log("aaaa====="+process.env.REACT_APP_SERVER_PORT);
         this.props.onCancel(false);
     };
 
