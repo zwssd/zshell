@@ -25,9 +25,9 @@
       "oneClick": false,
       "allowElevation": true,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "./build/icons/aaa.ico",
-      "uninstallerIcon": "./build/icons/bbb.ico",
-      "installerHeaderIcon": "./build/icons/aaa.ico",
+      "installerIcon": "./build/favicon.ico",
+      "uninstallerIcon": "./build/favicon.ico",
+      "installerHeaderIcon": "./build/favicon.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "xxxx",
@@ -66,7 +66,7 @@
       "icon": "build/logo512.png"
     },
     "win": {
-      "icon": "build/favicon.ico",
+      "icon": "build/logo512.png",
       "target": [
         {
           "target": "nsis",
