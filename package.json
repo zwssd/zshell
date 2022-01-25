@@ -30,7 +30,7 @@
       "installerHeaderIcon": "./build/favicon.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "xxxx",
+      "shortcutName": "zshell",
       "include": "build/script/installer.nsh"
     },
     "publish": [
