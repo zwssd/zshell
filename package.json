@@ -4,6 +4,7 @@
   "private": true,
   "main": "./main.js",
   "homepage": "./",
+  "email": "349705141@qq.com",
   "scripts": {
     "ser": "node src/backend/server.js",
     "start": "node scripts/start.js",
