@@ -67,17 +67,24 @@
     },
     "win": {
       "icon": "build/logo512.png",
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "ia32"
-          ]
-        }
-      ]
+      "target": {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
     },
     "linux": {
-      "icon": "build/logo512.png"
+      "icon": "build/logo512.png",
+      "target": [
+        "pacman",
+        "AppImage",
+        "deb",
+        "snap",
+        "rpm",
+        "tar.gz"
+      ]
     }
   },
   "dependencies": {
