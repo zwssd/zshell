@@ -2,7 +2,7 @@
   "name": "zshell",
   "version": "0.0.1",
   "private": true,
-  "main": "./src/main.js",
+  "main": "./main.js",
   "homepage": "./",
   "scripts": {
     "ser": "node src/backend/server.js",
