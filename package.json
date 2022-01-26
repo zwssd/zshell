@@ -4,7 +4,11 @@
   "private": true,
   "main": "./main.js",
   "homepage": "./",
-  "email": "349705141@qq.com",
+  "author": {
+    "name": "david",
+    "email": "349705141@qq.com",
+    "url": "https://gitee.com/zwssd1980/zshell"
+  },
   "scripts": {
     "ser": "node src/backend/server.js",
     "start": "node scripts/start.js",
@@ -77,14 +81,15 @@
       }
     },
     "linux": {
+      "category": "Development;System;TerminalEmulator",
       "icon": "build/logo512.png",
       "target": [
         "pacman",
         "AppImage",
-        "deb",
-        "snap",
         "rpm",
-        "tar.gz"
+        "tar.gz",
+        "deb",
+        "snap"
       ]
     }
   },
