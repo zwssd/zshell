@@ -4,7 +4,7 @@ const log = require('./src/frontend/utils/log')
 const path = require('path')
 const url = require('url')
 const child_process = require('child_process');
-//const server = require('./src/backend/server.js');
+const server = require('./src/backend/server.js');
 const exec = child_process.exec;
 var openExec;
  
@@ -45,7 +45,7 @@ mainWindow = new BrowserWindow({width: 1300, height: 1000})
   })
 
   //创建子进程，直接打开当前目录下的server.js
-  console.log('使用openExec方法执行server.js');
+  /*console.log('使用openExec方法执行server.js');
   openExec = exec('node ./server.js', function (error, stdout, stderr) {
     if (error) {
       console.log(error.stack);
@@ -55,7 +55,7 @@ mainWindow = new BrowserWindow({width: 1300, height: 1000})
     console.log('使用exec方法输出: ' + stdout);
     console.log(`stderr: ${stderr}`);
     console.log(process.pid)
-  })
+  })*/
 }
  
 // 当 Electron 完成初始化并准备创建浏览器窗口时调用此方法
@@ -68,7 +68,7 @@ app.on('window-all-closed', function () {
     app.quit()
 
     // 判断openExec是否存在，存在就杀掉node进程
-    if (!openExec) {
+    /*if (!openExec) {
       // console.log('openExec is null')
     } else {
       exec('taskkill /f /t /im node.exe', function (error, stdout, stderr) {
@@ -80,7 +80,7 @@ app.on('window-all-closed', function () {
         console.log('使用exec方法输出: ' + stdout);
         console.log(`stderr: ${stderr}`);
       });
-    }
+    }*/
   }
 })
  
