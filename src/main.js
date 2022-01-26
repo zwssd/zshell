@@ -4,6 +4,7 @@ const log = require('./src/frontend/utils/log')
 const path = require('path')
 const url = require('url')
 const child_process = require('child_process');
+//const server = require('./src/backend/server.js');
 const exec = child_process.exec;
 var openExec;
  
@@ -45,7 +46,7 @@ mainWindow = new BrowserWindow({width: 1300, height: 1000})
 
   //创建子进程，直接打开当前目录下的server.js
   console.log('使用openExec方法执行server.js');
-  openExec = exec('node ./src/backend/server.js', function (error, stdout, stderr) {
+  openExec = exec('node ./server.js', function (error, stdout, stderr) {
     if (error) {
       console.log(error.stack);
       console.log('Error code: ' + error.code);
