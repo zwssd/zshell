@@ -17,7 +17,8 @@
     "elec": "electron .",
     "packm": "electron-builder -m",
     "packl": "electron-builder -l",
-    "packw": "electron-builder -w"
+    "packw": "electron-builder -w",
+    "packmwl": "electron-builder -mwl"
   },
   "build": {
     "productName": "zshell",
@@ -35,8 +36,7 @@
       "installerHeaderIcon": "./build/favicon.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "zshell",
-      "include": "build/script/installer.nsh"
+      "shortcutName": "zshell"
     },
     "publish": [
       {
@@ -75,8 +75,7 @@
       "target": {
         "target": "nsis",
         "arch": [
-          "x64",
-          "ia32"
+          "x64"
         ]
       }
     },
